@@ -1,6 +1,7 @@
 let pWin = 0;
 let cWin = 0;
 
+// Generates the computers choice
 function getComputerChoice() {
     const number = Math.floor(Math.random() * 3);
     if(number == 0){
@@ -12,6 +13,7 @@ function getComputerChoice() {
     }
 }
 
+// Writes what happens during a round
 function playRound(playerSelection, computerSelection) {
     let pInput = playerSelection;
     let cInput = computerSelection;
@@ -27,6 +29,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
    
+// Plays 5 rounds and returns the winner of the 5
 function game() {
     let n = 0;
 
