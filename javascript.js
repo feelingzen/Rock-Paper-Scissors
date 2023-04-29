@@ -1,5 +1,25 @@
+// Player and computer score, starts at 0
 let pWin = 0;
 let cWin = 0;
+
+// Objects to add and objects that exist in the dom
+const button1 = document.querySelector('#button1');
+const button2 = document.querySelector('#button2');
+const button3 = document.querySelector('#button3');
+const playerScore = document.querySelector('#playerScore')
+const opponentScore = document.querySelector('#opponentScore')
+const outcomeAndScore = document.querySelector('.scoreAndOutcome')
+const roundOutcome = document.querySelector('#roundOutcome p')
+const restart = document.createAttribute('button')
+restart.textContent = 'Restart';
+playerScore.textContent = `You: ${pWin}`;
+opponentScore.textContent = `Opponent: ${cWin}`;
+outcomeAndScore.appendChild(roundOutcome)
+
+function scoreUpdate() {
+    playerScore.textContent = `You: ${pWin}`
+    opponentScore.textContent = `Opponent: ${cWin}`
+}
 
 // Generates the computers choice
 function getComputerChoice() {
@@ -19,33 +39,48 @@ function playRound(playerSelection, computerSelection) {
     let cInput = computerSelection;
 
     if (pInput == cInput) {
-        return console.log(`You drew, ${pInput} is equal to ${cInput}`);
+        roundOutcome.textContent = 'You drew!';
     } else if (pInput == 'rock' && cInput =='paper' || pInput == 'paper' && cInput == 'scissors' || pInput == 'scissors' && cInput == 'rock') {
-        return console.log(`You lost, ${cInput} defeated ${pInput}!`), cWin++;
+        roundOutcome.textContent = `Your opponent picked ${cInput} and beat you!`;
+        cWin++
     } else if (pInput == 'paper' && cInput =='rock' || pInput == 'scissors' && cInput == 'paper' || pInput == 'rock' && cInput == 'scissors') {
-        return console.log(`You won! ${pInput} dominated ${cInput}`), pWin++;
+        roundOutcome.textContent = `You beat your opponent, they picked ${cInput}!`;
+        pWin++
     } else {
         return 'That is not an option!';
     }
+    scoreUpdate()
+    if (pWin == 5 || cWin == 5) {
+        button1.removeEventListener('click', clickRound1)
+        button2.removeEventListener('click', clickRound2)
+        button3.removeEventListener('click', clickRound3)
+        if (pWin > cWin) {
+            roundOutcome.textContent = 'You won, you beat your opponent 5 times!'
+        } else if (cWin > pWin) {
+            roundOutcome.textContent = 'You lost! Your opponent beat you 5 times!'
+        }
+        outcomeAndScore.appendChild(restart)
+    };
+    
+    
 }
-   
-// Plays 5 rounds and returns the winner of the 5
-function game() {
-    let n = 0;
 
-    while (n !== 5) {
-        n++
-        playerSelection = prompt('Pick one of these objects: Rock, paper and scissors.').toLowerCase();
-        computerSelection = getComputerChoice();
-        playRound(playerSelection, computerSelection)
-    }
+button1.addEventListener('click', clickRound1);
 
-    if (cWin > pWin) {
-        console.log(`You lost to your opponent ${cWin} games out of 5!`)
-    } else if (pWin > cWin) {
-        console.log(`You won! You beat your opponent in ${pWin} games out of 5`)
-    } else {
-        console.log(`You drew!`)
-    }
-}
-game()
+button2.addEventListener('click', clickRound2);
+
+button3.addEventListener('click', clickRound3);
+
+function clickRound1() {
+    playRound('rock', getComputerChoice())
+};
+
+function clickRound2() {
+    playRound('paper', getComputerChoice())
+};
+
+function clickRound3() {
+    playRound('scissors', getComputerChoice())
+};
+
+
