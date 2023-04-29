@@ -10,8 +10,10 @@ const playerScore = document.querySelector('#playerScore')
 const opponentScore = document.querySelector('#opponentScore')
 const outcomeAndScore = document.querySelector('.scoreAndOutcome')
 const roundOutcome = document.querySelector('#roundOutcome p')
-playerScore.textContent = `You: ${pWin}`
-opponentScore.textContent = `Opponent: ${cWin}`
+const restart = document.createAttribute('button')
+restart.textContent = 'Restart';
+playerScore.textContent = `You: ${pWin}`;
+opponentScore.textContent = `Opponent: ${cWin}`;
 outcomeAndScore.appendChild(roundOutcome)
 
 function scoreUpdate() {
@@ -57,6 +59,7 @@ function playRound(playerSelection, computerSelection) {
         } else if (cWin > pWin) {
             roundOutcome.textContent = 'You lost! Your opponent beat you 5 times!'
         }
+        outcomeAndScore.appendChild(restart)
     };
     
     
