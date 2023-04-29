@@ -10,8 +10,8 @@ const playerScore = document.querySelector('#playerScore')
 const opponentScore = document.querySelector('#opponentScore')
 const outcomeAndScore = document.querySelector('.scoreAndOutcome')
 const roundOutcome = document.querySelector('#roundOutcome p')
-const restart = document.createAttribute('button')
-restart.textContent = 'Restart';
+const restart = document.querySelector('#restart')
+restart.style.cssText = 'display: none;'
 playerScore.textContent = `You: ${pWin}`;
 opponentScore.textContent = `Opponent: ${cWin}`;
 outcomeAndScore.appendChild(roundOutcome)
@@ -31,6 +31,17 @@ function getComputerChoice() {
     } else {
         return("scissors");
     }
+}
+
+function reset() {
+    pWin = 0;
+    cWin = 0;
+    playerScore.textContent = `You: ${pWin}`
+    opponentScore.textContent = `Opponent: ${cWin}`
+    roundOutcome.textContent = ``
+    button1.addEventListener('click', clickRound1);
+    button2.addEventListener('click', clickRound2);
+    button3.addEventListener('click', clickRound3);
 }
 
 // Writes what happens during a round
@@ -59,17 +70,17 @@ function playRound(playerSelection, computerSelection) {
         } else if (cWin > pWin) {
             roundOutcome.textContent = 'You lost! Your opponent beat you 5 times!'
         }
-        outcomeAndScore.appendChild(restart)
+        restart.style.cssText = 'display: initial;'
     };
     
     
 }
 
+restart.addEventListener('click', reset)
 button1.addEventListener('click', clickRound1);
-
 button2.addEventListener('click', clickRound2);
-
 button3.addEventListener('click', clickRound3);
+
 
 function clickRound1() {
     playRound('rock', getComputerChoice())
